@@ -6,13 +6,13 @@
 NNODES=${1-1}
 PASSWORD=${2:-`date +%D%A%B | md5sum| sha256sum | base64| fold -w16| head -n1`}
 IPLIST=`echo ""`
-MYIP=`ip route get 10.0.0.50 | awk 'NR==1 {print $NF}'`
-MYNAME=`echo "Node$MYIP" | sed 's/10.0.0./-/'`
+MYIP=`ip route get 10.0.0.5 | awk 'NR==1 {print $NF}'`
+MYNAME=`echo "Node$MYIP" | sed 's/10.0.0.1/-/'`
 CNAME=${3:-"GaleraCluster"}
 
-for (( n=1; n<=$NNODES; n++ ))
+for (( n=1; n<$NNODES; n++ ))
 do
-   IPLIST+=`echo "10.0.0.$n"`
+   IPLIST+=`echo "10.0.0.1$n"`
    if [ "$n" -lt $NNODES ];
    then
         IPLIST+=`echo ","`
@@ -56,7 +56,7 @@ mv debian.cnf /etc/mysql/debian.cnf
 
 # Starts a cluster if is the first node
 
-if [ "10.0.0.2" = "$MYIP" ];
+if [ "10.0.0.10" = "$MYIP" ];
 then
    service mysql start --wsrep-new-cluster
 else
