@@ -12,7 +12,7 @@ wsrepprovider=/usr/lib/galera/libgalerasmm.so
 #wsrepprovideroptions="gcache.size=32G"
 
 # Galera Cluster Configuration
-wsrep_cluster_name="testcluster" 
+wsrep_cluster_name="CLUSTERNAME" 
 wsrep_cluster_address="gcomm://IPLIST" 
 
 # Galera Synchronization Congifuration
