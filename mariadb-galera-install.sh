@@ -10,9 +10,9 @@ MYIP=`ip route get 10.0.0.5 | awk 'NR==1 {print $NF}'`
 MYNAME=`echo "Node$MYIP" | sed 's/10.0.0.1/-/'`
 CNAME=${3:-"GaleraCluster"}
 
-for (( n=1; n<$NNODES; n++ ))
+for (( n=1; n<=$NNODES; n++ ))
 do
-   IPLIST+=`echo "10.0.0.1$n"`
+   IPLIST+=`echo "10.0.0.$(( $n + 9 ))"`
    if [ "$n" -lt $NNODES ];
    then
         IPLIST+=`echo ","`
