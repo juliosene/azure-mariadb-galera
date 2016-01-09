@@ -29,12 +29,11 @@ DISTRO=`lsb_release -is | tr [:upper:] [:lower:]`
 # NCORES=` cat /proc/cpuinfo | grep cores | wc -l`
 # WORKER=`bc -l <<< "4*$NCORES"`
 
-apt-get install -y python-software-properties python-software-properties-common
+apt-get install -y --fix-missing python-software-properties
 apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db
-add-apt-repository "deb http://mirror.edatel.net.co/mariadb/repo/10.1/$DISTRO $REL main"
+add-apt-repository "deb [arch=amd64] http://mirror.edatel.net.co/mariadb/repo/10.1/$DISTRO $REL main"
 
 apt-get update
-
 
 DEBIAN_FRONTEND=noninteractive apt-get install -y rsync mariadb-server galera-3
 
