@@ -44,14 +44,14 @@ service mysql stop
 wget https://raw.githubusercontent.com/juliosene/azure-mariadb-galera/master/cluster.cnf
 
 sed -i "s/IPLIST/$IPLIST/g;s/MYIP/$MYIP/g;s/MYNAME/$MYNAME/g;s/CLUSTERNAME/$CNAME/g" cluster.cnf
-mv cluster.cnf /etc/mysql/conf.d/cluster.cnf
+mv cluster.cnf /etc/mysql/conf.d/
 
 # Create Debian manager config file
 
 wget https://raw.githubusercontent.com/juliosene/azure-mariadb-galera/master/debian.cnf
 
 sed -i "s/IPLIST/$IPLIST/g;s/MYIP/$MYIP/g;s/MYNAME/$MYNAME/g;s/#PASSWORD#/$PASSWORD/g" debian.cnf
-mv debian.cnf /etc/mysql/debian.cnf
+mv debian.cnf /etc/mysql/
 
 # Starts a cluster if is the first node
 
