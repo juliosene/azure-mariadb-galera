@@ -64,3 +64,6 @@ then
 else
    service mysql start
 fi
+
+# To check cluster use the command below
+# mysql -u root -e 'SELECT VARIABLE_VALUE as "cluster size" FROM INFORMATION_SCHEMA.GLOBAL_STATUS WHERE VARIABLE_NAME="wsrep_cluster_size"'
