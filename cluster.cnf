@@ -8,7 +8,7 @@ query_cache_type=0
 bind-address=0.0.0.0 
 
 # Galera Provider Configuration
-wsrepprovider=/usr/lib/galera/libgalerasmm.so 
+wsrepprovider=/usr/lib/galera/libgalera_smm.so 
 #wsrepprovideroptions="gcache.size=32G"
 
 # Galera Cluster Configuration
