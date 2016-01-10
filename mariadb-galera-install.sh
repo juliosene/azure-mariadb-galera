@@ -39,6 +39,9 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y rsync mariadb-server galera-3
 
 service mysql stop
 
+# adjust my.cnf
+sed -i "s/#wsrep_on=ON/wsrep_on=ON/g" /etc/mysql/my.cnf
+
 # create Galera config file
 
 wget https://raw.githubusercontent.com/juliosene/azure-mariadb-galera/master/cluster.cnf
