@@ -35,7 +35,7 @@ add-apt-repository "deb [arch=amd64] http://mirror.edatel.net.co/mariadb/repo/10
 
 apt-get update
 
-DEBIAN_FRONTEND=noninteractive apt-get install -y rsync mariadb-server galera-3
+DEBIAN_FRONTEND=noninteractive apt-get install -y rsync mariadb-server
 
 service mysql stop
 
