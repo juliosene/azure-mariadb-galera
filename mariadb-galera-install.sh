@@ -53,7 +53,7 @@ mv cluster.cnf /etc/mysql/conf.d/
 
 wget https://raw.githubusercontent.com/juliosene/azure-mariadb-galera/master/debian.cnf
 
-sed -i "s/IPLIST/$IPLIST/g;s/MYIP/$MYIP/g;s/MYNAME/$MYNAME/g;s/#PASSWORD#/$PASSWORD/g" debian.cnf
+sed -i "s/#PASSWORD#/$PASSWORD/g" debian.cnf
 mv debian.cnf /etc/mysql/
 
 # Starts a cluster if is the first node
