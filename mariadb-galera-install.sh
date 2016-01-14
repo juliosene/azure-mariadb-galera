@@ -9,6 +9,7 @@ IPLIST=`echo ""`
 MYIP=`ip route get 10.0.0.5 | awk 'NR==1 {print $NF}'`
 MYNAME=`echo "Node$MYIP" | sed 's/10.0.0.1/-/'`
 CNAME=${3:-"GaleraCluster"}
+FIRSTNODE=`echo "10.0.0.$(( $NNODES + 9 ))"`
 
 for (( n=1; n<=$NNODES; n++ ))
 do
@@ -58,11 +59,11 @@ mv debian.cnf /etc/mysql/
 
 # Starts a cluster if is the first node
 
-if [ "10.0.0.10" = "$MYIP" ];
+if [ "$FIRSTNODE" = "$MYIP" ];
 then
    service mysql start --wsrep-new-cluster
 else
-   service mysql start --wsrep_cluster_address=gcomm://$MYIP
+   service mysql start --wsrep_cluster_address=gcomm://$FIRSTNODE
 fi
 
 # To check cluster use the command below
