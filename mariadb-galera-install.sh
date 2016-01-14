@@ -62,7 +62,7 @@ if [ "10.0.0.10" = "$MYIP" ];
 then
    service mysql start --wsrep-new-cluster
 else
-   service mysql start
+   service mysql start --wsrep_cluster_address=gcomm://$IPLIST
 fi
 
 # To check cluster use the command below
