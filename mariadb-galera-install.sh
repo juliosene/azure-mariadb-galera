@@ -38,6 +38,16 @@ apt-get update
 
 DEBIAN_FRONTEND=noninteractive apt-get install -y rsync mariadb-server
 
+# Remplace Debian maintenance config file
+
+wget https://raw.githubusercontent.com/juliosene/azure-mariadb-galera/master/debian.cnf
+
+sed -i "s/#PASSWORD#/$PASSWORD/g" debian.cnf
+mv debian.cnf /etc/mysql/
+
+#change the password for maintenance user
+mysql GRANT ALL PRIVILEGES on *.* TO 'debian-sys-maint'@'localhost' IDENTIFIED BY '$PASSWORD' WITH GRANT OPTION; FLUSH PRIVILEGES; EXIT;
+
 service mysql stop
 
 # adjust my.cnf
@@ -49,13 +59,6 @@ wget https://raw.githubusercontent.com/juliosene/azure-mariadb-galera/master/clu
 
 sed -i "s/#wsrep_on=ON/wsrep_on=ON/g;s/IPLIST/$IPLIST/g;s/MYIP/$MYIP/g;s/MYNAME/$MYNAME/g;s/CLUSTERNAME/$CNAME/g" cluster.cnf
 mv cluster.cnf /etc/mysql/conf.d/
-
-# Create Debian manager config file
-
-wget https://raw.githubusercontent.com/juliosene/azure-mariadb-galera/master/debian.cnf
-
-sed -i "s/#PASSWORD#/$PASSWORD/g" debian.cnf
-mv debian.cnf /etc/mysql/
 
 # Starts a cluster if is the first node
 
