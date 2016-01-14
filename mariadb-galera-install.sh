@@ -46,7 +46,7 @@ sed -i "s/#PASSWORD#/$PASSWORD/g" debian.cnf
 mv debian.cnf /etc/mysql/
 
 #change the password for maintenance user
-QUERY="whichmysql GRANT ALL PRIVILEGES on *.* TO 'debian-sys-maint'@'localhost' IDENTIFIED BY '$PASSWORD' WITH GRANT OPTION; FLUSH PRIVILEGES; EXIT;
+QUERY="whichmysql GRANT ALL PRIVILEGES on *.* TO 'debian-sys-maint'@'localhost' IDENTIFIED BY '$PASSWORD' WITH GRANT OPTION; FLUSH PRIVILEGES; EXIT;"
 $QUERY
 service mysql stop
 
