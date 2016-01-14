@@ -40,13 +40,13 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y rsync mariadb-server
 service mysql stop
 
 # adjust my.cnf
-sed -i "s/#wsrep_on=ON/wsrep_on=ON/g" /etc/mysql/my.cnf
+# sed -i "s/#wsrep_on=ON/wsrep_on=ON/g" /etc/mysql/my.cnf
 
 # create Galera config file
 
 wget https://raw.githubusercontent.com/juliosene/azure-mariadb-galera/master/cluster.cnf
 
-sed -i "s/IPLIST/$IPLIST/g;s/MYIP/$MYIP/g;s/MYNAME/$MYNAME/g;s/CLUSTERNAME/$CNAME/g" cluster.cnf
+sed -i "s/#wsrep_on=ON/wsrep_on=ON/g;s/IPLIST/$IPLIST/g;s/MYIP/$MYIP/g;s/MYNAME/$MYNAME/g;s/CLUSTERNAME/$CNAME/g" cluster.cnf
 mv cluster.cnf /etc/mysql/conf.d/
 
 # Create Debian manager config file
