@@ -67,3 +67,9 @@ fi
 
 # To check cluster use the command below
 # mysql -u root -e 'SELECT VARIABLE_VALUE as "cluster size" FROM INFORMATION_SCHEMA.GLOBAL_STATUS WHERE VARIABLE_NAME="wsrep_cluster_size"'
+#
+# To add a new cluster node:
+# 1 - stop MariaDB
+# service mysql stop
+# 2 - start as a new node
+# service mysql start --wsrep_cluster_address=gcomm://10.0.0.10
