@@ -4,11 +4,12 @@
 # $1 - number of nodes; $2 - cluster name;
 #
 NNODES=${1-1}
-PASSWORD=${2:-`date +%D%A%B | md5sum| sha256sum | base64| fold -w16| head -n1`}
+MYSQLPASSWORD=${2:-""}
+DEBPASSWORD=${3:-`date +%D%A%B | md5sum| sha256sum | base64| fold -w16| head -n1`}
 IPLIST=`echo ""`
 MYIP=`ip route get 10.0.0.5 | awk 'NR==1 {print $NF}'`
 MYNAME=`echo "Node$MYIP" | sed 's/10.0.0.1/-/'`
-CNAME=${3:-"GaleraCluster"}
+CNAME=${4:-"GaleraCluster"}
 FIRSTNODE=`echo "10.0.0.$(( $NNODES + 9 ))"`
 
 for (( n=1; n<=$NNODES; n++ ))
@@ -42,11 +43,13 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y rsync mariadb-server
 
 wget https://raw.githubusercontent.com/juliosene/azure-mariadb-galera/master/debian.cnf
 
-sed -i "s/#PASSWORD#/$PASSWORD/g" debian.cnf
+sed -i "s/#PASSWORD#/$DEBPASSWORD/g" debian.cnf
 mv debian.cnf /etc/mysql/
 
-#change the password for maintenance user
-QUERY="whichmysql GRANT ALL PRIVILEGES on *.* TO 'debian-sys-maint'@'localhost' IDENTIFIED BY '$PASSWORD' WITH GRANT OPTION; FLUSH PRIVILEGES; EXIT;"
+#change the password for root and maintenance user
+QUERY="which mysql GRANT ALL PRIVILEGES on *.* TO 'debian-sys-maint'@'localhost' IDENTIFIED BY '$DEBPASSWORD' WITH GRANT OPTION;"
+QUERY+="ALTER USER 'root'@'localhost' IDENTIFIED BY '$MYSQLPASSWORD';"
+QUERY+=" FLUSH PRIVILEGES; EXIT;"
 $QUERY
 service mysql stop
 
