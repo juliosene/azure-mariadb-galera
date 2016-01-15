@@ -66,12 +66,12 @@ mv cluster.cnf /etc/mysql/conf.d/
 
 # Starts a cluster if is the first node
 
-# if [ "$FIRSTNODE" = "$MYIP" ];
-# then
-#    service mysql start --wsrep-new-cluster
-# else
-#    service mysql start --wsrep_cluster_address=gcomm://$FIRSTNODE
-# fi
+if [ "$FIRSTNODE" = "$MYIP" ];
+then
+    service mysql start --wsrep-new-cluster
+else
+    service mysql start --wsrep_cluster_address=gcomm://$FIRSTNODE
+fi
 
 # To check cluster use the command below
 # mysql -u root -p
