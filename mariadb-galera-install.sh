@@ -48,7 +48,7 @@ mv debian.cnf /etc/mysql/
 
 #change the password for root and maintenance user
 QUERY="which mysql -uroot -e "
-QUERY+=GRANT ALL PRIVILEGES on *.* TO 'debian-sys-maint'@'localhost' IDENTIFIED BY '$DEBPASSWORD' WITH GRANT OPTION;"
+QUERY+="GRANT ALL PRIVILEGES on *.* TO 'debian-sys-maint'@'localhost' IDENTIFIED BY '$DEBPASSWORD' WITH GRANT OPTION;"
 QUERY+="SET PASSWORD FOR 'root'@'localhost' = PASSWORD('$MYSQLPASSWORD');"
 QUERY+="FLUSH PRIVILEGES; EXIT;"
 $QUERY
@@ -66,12 +66,12 @@ mv cluster.cnf /etc/mysql/conf.d/
 
 # Starts a cluster if is the first node
 
-if [ "$FIRSTNODE" = "$MYIP" ];
-then
-   service mysql start --wsrep-new-cluster
-else
-   service mysql start --wsrep_cluster_address=gcomm://$FIRSTNODE
-fi
+# if [ "$FIRSTNODE" = "$MYIP" ];
+# then
+#    service mysql start --wsrep-new-cluster
+# else
+#    service mysql start --wsrep_cluster_address=gcomm://$FIRSTNODE
+# fi
 
 # To check cluster use the command below
 # mysql -u root -p
