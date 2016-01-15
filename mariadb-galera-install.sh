@@ -47,7 +47,8 @@ sed -i "s/#PASSWORD#/$DEBPASSWORD/g" debian.cnf
 mv debian.cnf /etc/mysql/
 
 #change the password for root and maintenance user
-QUERY="which mysql GRANT ALL PRIVILEGES on *.* TO 'debian-sys-maint'@'localhost' IDENTIFIED BY '$DEBPASSWORD' WITH GRANT OPTION;"
+QUERY="which mysql -uroot -e "
+QUERY+=GRANT ALL PRIVILEGES on *.* TO 'debian-sys-maint'@'localhost' IDENTIFIED BY '$DEBPASSWORD' WITH GRANT OPTION;"
 QUERY+="SET PASSWORD FOR 'root'@'localhost' = PASSWORD('$MYSQLPASSWORD');"
 QUERY+="FLUSH PRIVILEGES; EXIT;"
 $QUERY
