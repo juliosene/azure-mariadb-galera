@@ -49,16 +49,16 @@ mv debian.cnf /etc/mysql/
 if [ "$FIRSTNODE" = "$MYIP" ];
 then
 #change the password for maintenance user
-QUERY="which mysql -uroot -e "
+QUERY="mysql -u root -e '"
 QUERY+="GRANT ALL PRIVILEGES on *.* TO 'debian-sys-maint'@'localhost' IDENTIFIED BY '$DEBPASSWORD' WITH GRANT OPTION;"
-QUERY+="FLUSH PRIVILEGES; EXIT;"
+QUERY+="FLUSH PRIVILEGES; EXIT;'"
 $QUERY
 fi
 
 #change the password for root
-QUERY="which mysql -uroot -e "
+QUERY="mysql -u root -e '"
 QUERY+="SET PASSWORD FOR 'root'@'localhost' = PASSWORD('$MYSQLPASSWORD');"
-QUERY+="FLUSH PRIVILEGES; EXIT;"
+QUERY+="FLUSH PRIVILEGES; EXIT;'"
 $QUERY
 service mysql stop
 
