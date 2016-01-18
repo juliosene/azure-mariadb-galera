@@ -49,6 +49,10 @@ mv debian.cnf /etc/mysql/
 #change the password for root and maintenance user
 QUERY="which mysql -uroot -e "
 QUERY+="GRANT ALL PRIVILEGES on *.* TO 'debian-sys-maint'@'localhost' IDENTIFIED BY '$DEBPASSWORD' WITH GRANT OPTION;"
+QUERY+="FLUSH PRIVILEGES; EXIT;"
+$QUERY
+
+QUERY="which mysql -uroot -e "
 QUERY+="SET PASSWORD FOR 'root'@'localhost' = PASSWORD('$MYSQLPASSWORD');"
 QUERY+="FLUSH PRIVILEGES; EXIT;"
 $QUERY
