@@ -46,20 +46,13 @@ wget https://raw.githubusercontent.com/juliosene/azure-mariadb-galera/master/deb
 sed -i "s/#PASSWORD#/$DEBPASSWORD/g" debian.cnf
 mv debian.cnf /etc/mysql/
 
-if [ "$FIRSTNODE" = "$MYIP" ];
-then
-#change the password for maintenance user
-QUERY="mysql -u root -e '"
-QUERY+="GRANT ALL PRIVILEGES on *.* TO 'debian-sys-maint'@'localhost' IDENTIFIED BY '$DEBPASSWORD' WITH GRANT OPTION;"
-QUERY+="FLUSH PRIVILEGES; EXIT;'"
-$QUERY
-fi
+mysql -u root <<EOF 
+GRANT ALL PRIVILEGES on *.* TO 'debian-sys-maint'@'localhost' IDENTIFIED BY '$DEBPASSWORD' WITH GRANT OPTION;
+SET PASSWORD FOR 'root'@'localhost' = PASSWORD('$MYSQLPASSWORD');
+FLUSH PRIVILEGES;
+EXIT;
+EOF 
 
-#change the password for root
-QUERY="mysql -u root -e '"
-QUERY+="SET PASSWORD FOR 'root'@'localhost' = PASSWORD('$MYSQLPASSWORD');"
-QUERY+="FLUSH PRIVILEGES; EXIT;'"
-$QUERY
 service mysql stop
 
 # adjust my.cnf
