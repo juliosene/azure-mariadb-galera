@@ -50,7 +50,6 @@ mysql -u root <<EOF
 GRANT ALL PRIVILEGES on *.* TO 'debian-sys-maint'@'localhost' IDENTIFIED BY '$DEBPASSWORD' WITH GRANT OPTION;
 SET PASSWORD FOR 'root'@'localhost' = PASSWORD('$MYSQLPASSWORD');
 FLUSH PRIVILEGES;
-EXIT;
 EOF 
 
 service mysql stop
