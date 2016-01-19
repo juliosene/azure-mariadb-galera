@@ -46,11 +46,11 @@ wget https://raw.githubusercontent.com/juliosene/azure-mariadb-galera/master/deb
 sed -i "s/#PASSWORD#/$DEBPASSWORD/g" debian.cnf
 mv debian.cnf /etc/mysql/
 
-mysql -u root <<EOF 
+mysql -u root <<EOF
 GRANT ALL PRIVILEGES on *.* TO 'debian-sys-maint'@'localhost' IDENTIFIED BY '$DEBPASSWORD' WITH GRANT OPTION;
 SET PASSWORD FOR 'root'@'localhost' = PASSWORD('$MYSQLPASSWORD');
 FLUSH PRIVILEGES;
-EOF 
+EOF
 
 service mysql stop
 
